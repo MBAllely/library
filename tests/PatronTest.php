@@ -66,33 +66,13 @@
             $this->assertEquals([$test_patron, $test_patron2], $result);
         }
 
-        // function test_addBook()
-        // {
-        //     //Arrange
-        //     $author_name = "Philip Pullman";
-        //     $test_author = new Author($author_name);
-        //     $test_author->save();
-        //
-        //     $title = "Golden Compass";
-        //     $copies = 3;
-        //     $test_book = new Book($title, $copies);
-        //     $test_book->save();
-        //
-        //     //Act
-        //     $test_author->addBook($test_book);
-        //
-        //
-        //     //Assert
-        //     $this->assertEquals($test_author->getBooks(), [$test_book]);
-        //
-        // }
-        //
-        //
+
+
         // function test_getBooks()
         // {
         //     //Arrange
-        //     $author_name = "Philip Pullman";
-        //     $test_author = new Author($author_name);
+        //     $patron_name = "Philip Pullman";
+        //     $test_patron = new Author($author_name);
         //     $test_author->save();
         //
         //     $title = "Golden Compass";

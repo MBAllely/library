@@ -161,5 +161,28 @@
             //Assert
             $this->assertEquals($test_book->getAuthors(), [$test_author]);
         }
+
+        function test_deleteOneBook()
+        {
+            // Arrange
+            $title = "Little Women";
+            $copies = 5;
+            $id = null;
+            $test_book = new Book ($title, $copies, $id);
+            $test_book->save();
+
+            $title2 = "Anne of Green Gables";
+            $copies2 = 2;
+            $id2 = null;
+            $test_book2 = new Book ($title2, $copies2, $id2);
+            $test_book2->save();
+
+            // Act
+            $test_book->deleteOneBook();
+            $result = Book::getAll();
+
+            //Assert
+            $this->assertEquals([$test_book2], $result);
+        }
     }
  ?>

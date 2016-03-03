@@ -63,12 +63,6 @@
             return $found_patron;
         }
 
-//Move this to Checkout.php
-        function addPatron($patron)
-        {
-            $GLOBALS['DB']->exec("INSERT INTO checkout (patron_id) VALUES ({$patron->getId()}, {$this->getId()});");
-        }
-//
         // function getAuthors()
         // {
         //     $found_authors = $GLOBALS['DB']->query("SELECT authors.* FROM books

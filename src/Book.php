@@ -106,7 +106,7 @@
 
         function deleteOneBook()
         {
-            $GLOBALS['DB']->exec("DELETE FROM book WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM books WHERE id = {$this->getId()};");
             $GLOBALS['DB']->exec("DELETE FROM author_book WHERE book_id = {$this->getId()};");
         }
 
