@@ -2,7 +2,6 @@
     class Book
     {
         private $title;
-        // private $author_id;
         private $copies;
         private $id;
 

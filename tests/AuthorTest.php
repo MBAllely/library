@@ -68,6 +68,62 @@
             $this->assertEquals([$test_author, $test_author2], $result);
         }
 
+        function test_addBook()
+        {
+            //Arrange
+            $author_name = "Philip Pullman";
+            $test_author = new Author($author_name);
+            $test_author->save();
+
+            $title = "Golden Compass";
+            $copies = 3;
+            $test_book = new Book($title, $copies);
+            $test_book->save();
+
+            //Act
+            $test_author->addBook($test_book);
+
+
+            //Assert
+            $this->assertEquals($test_author->getBooks(), [$test_book]);
+
+        }
+
+
+        function test_getBooks()
+        {
+            //Arrange
+            $author_name = "Philip Pullman";
+            $test_author = new Author($author_name);
+            $test_author->save();
+
+            $title = "Golden Compass";
+            $copies = 3;
+            $id = 1;
+            $test_book = new Book($title, $copies, $id);
+            $test_book->save();
+
+            $title2 = "The Subtle Knife";
+            $copies2 = 4;
+            $id2 = 2;
+            $test_book2 = new Book($title2, $copies2, $id2);
+            $test_book2->save();
+
+            $title3 = "Amber Spyglass";
+            $copies3 = 3;
+            $test_book3 = new Book($title3, $copies3);
+            $test_book3->save();
+
+            //Act
+            $test_author->addBook($test_book);
+            $test_author->addBook($test_book2);
+            $test_author->addBook($test_book3);
+
+            //Assert
+            $this->assertEquals([$test_book, $test_book2, $test_book3], $test_author->getBooks());
+
+        }
+
     }
 
 
