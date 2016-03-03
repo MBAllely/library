@@ -124,6 +124,42 @@
 
         }
 
+        function test_deleteOneAuthor()
+        {
+            // Arrange
+            $author_name = "Philip Pullman";
+            $test_author = new Author($author_name);
+            $test_author->save();
+
+            $author_name2 = "JK Rowling";
+            $test_author2 = new Author($author_name2);
+            $test_author2->save();
+
+            // Act
+            $test_author->deleteOneAuthor();
+            $result = Author::getAll();
+
+            //Assert
+            $this->assertEquals([$test_author2], $result);
+        }
+
+        function test_find()
+        {
+            // Arrange
+            $author_name = "Philip Pullman";
+            $test_author = new Author($author_name);
+            $test_author->save();
+
+            $author_name2 = "JK Rowling";
+            $test_author2 = new Author($author_name2);
+            $test_author2->save();
+
+            // Act
+            $result = Author::find($test_author2->getId());
+
+            // Assert
+            $this->assertEquals($test_author2, $result);
+        }
     }
 
  ?>
