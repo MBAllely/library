@@ -16,6 +16,10 @@
 
     class CheckoutTest extends PHPUnit_Framework_TestCase
     {
+        protected function tearDown()
+        {
+            Checkout::deleteAll();
+        }
 
         function test_getInfo()
         {
@@ -41,6 +45,23 @@
             $this->assertEquals($due_date, $result4);
             $this->assertEquals($id, $result5);
 
+        }
+
+        function test_save()
+        {
+            //Arrange
+            $book_id = 1;
+            $patron_id = 2;
+            $checkout_date = "2016-03-03";
+            $due_date = "2016-03-17";
+            $test_checkout = new Checkout($book_id, $patron_id, $checkout_date, $due_date);
+
+            //Act
+            $test_checkout->save();
+            $result = Checkout::getAll();
+
+            //Assert
+            $this->assertEquals([$test_checkout], $result);
         }
 
     }

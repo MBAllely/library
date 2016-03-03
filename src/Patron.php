@@ -63,24 +63,6 @@
             return $found_patron;
         }
 
-        // function getAuthors()
-        // {
-        //     $found_authors = $GLOBALS['DB']->query("SELECT authors.* FROM books
-        //         JOIN author_book ON (books.id = author_book.book_id)
-        //         JOIN authors ON (author_book.author_id = authors.id)
-        //         WHERE books.id = {$this->getId()};");
-        //
-        //     $authors = [];
-        //     foreach($found_authors as $author) {
-        //
-        //         $author_name = $author['author_name'];
-        //         $id = $author['id'];
-        //         $new_author = new Author($author_name, $id);
-        //         array_push($authors, $new_author);
-        //     }
-        //     return $authors;
-        // }
-        //
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM patrons;");
@@ -91,14 +73,27 @@
             $GLOBALS['DB']->exec("DELETE FROM patrons WHERE id = {$this->getId()};");
         }
 
-        function addCheckout()
+        function addCheckout($checkout)
         {
-
+            $GLOBALS['DB']->exec("INSERT INTO checkouts (book_id, patron_id, checkout_date, due_date) VALUES ({$checkout->getBookId()}, {$this->getId()}, '{$checkout->getCheckoutDate()}', '{$checkout->getDueDate()}');");
+            $checkout->setId($GLOBALS['DB']->lastInsertId());
         }
 
         function getCheckouts()
         {
-
+            $checkouts = [];
+            $returned_checkouts = $GLOBALS['DB']->query("SELECT * FROM checkouts WHERE patron_id = {$this->getId()};");
+            foreach ($returned_checkouts as $checkout)
+            {
+                $book_id = $checkout['book_id'];
+                $patron_id = $checkout['patron_id'];
+                $checkout_date = $checkout['checkout_date'];
+                $due_date = $checkout['due_date'];
+                $id = $checkout['id'];
+                $new_checkout = new Checkout($book_id, $patron_id, $checkout_date, $due_date, $id);
+                array_push($checkouts, $new_checkout);
+            }
+            return $checkouts;
         }
 
     }

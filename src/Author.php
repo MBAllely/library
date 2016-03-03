@@ -76,6 +76,7 @@
                 WHERE authors.id = {$this->getId()};");
 
             $books = [];
+            
             foreach($found_books as $book) {
 
                 $title = $book['title'];

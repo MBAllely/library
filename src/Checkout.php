@@ -61,6 +61,38 @@
             return $this->id;
         }
 
-        
+        function setId($new_id)
+        {
+            $this->id = $new_id;
+        }
+
+        function save()
+        {
+            $GLOBALS['DB']->exec("INSERT INTO checkouts (book_id, patron_id, checkout_date, due_date) VALUES ({$this->getBookId()}, {$this->getPatronId()}, '{$this->getCheckoutDate()}', '{$this->getDueDate()}');");
+            $this->id = $GLOBALS['DB']->lastInsertId();
+        }
+
+        static function getAll()
+        {
+            $returned_checkouts = $GLOBALS['DB']->query("SELECT * FROM checkouts;");
+            $checkouts = [];
+
+            foreach($returned_checkouts as $checkout) {
+                $book_id = $checkout['book_id'];
+                $patron_id = $checkout['patron_id'];
+                $checkout_date = $checkout['checkout_date'];
+                $due_date = $checkout['due_date'];
+                $id = $checkout['id'];
+                $new_checkout = new Checkout($book_id, $patron_id, $checkout_date, $due_date, $id);
+                array_push($checkouts, $new_checkout);
+            }
+            return $checkouts;
+        }
+
+        static function deleteAll()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM checkouts;");
+        }
+
     }
  ?>
