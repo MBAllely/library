@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include '/includes/head.html.twig' %}
+        <meta charset="utf-8">
+        <title>Author | Edit</title>
+    </head>
+    <body>
+        <h1>Edit {{ author.getAuthorName }}'s profile</h1>
+
+        <form action="/author/{{ author.getId }}" method="post">
+            <input name="_method" type="hidden" value="patch">
+            <label for="new_name">New Name:</label>
+            <input name="_method" type="hidden" value="patch">
+            <input type="text" name="new_name" placeholder="ex: JRR Tolkein">
+            <button type="submit" class="btn btn-primary">Update Author</button>
+        </form>
+
+        <a href="/">Home</a>
+    </body>
+</html>

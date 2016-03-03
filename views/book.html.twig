@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include '/includes/head.html.twig' %}
+        <title>Library | {{ book.getTitle }}</title>
+    </head>
+    <body>
+        <div class="container">
+            <h2>{{ book.getTitle }} | Copies: {{ book.getCopies }}</h2>
+
+            {% if authors is not empty %}
+                <h4>The author(s) for {{ book.getTitle }} ise (are):</h4>
+                {% for author in authors %}
+                    <h5>{{ author.getAuthorName }}</h5>
+                {% endfor %}
+            {% else %}
+                <h5>This book has not been assigned any authors.</h5>
+            {% endif %}
+
+            <form action="/book/{{ book.getId }}/edit" method="get">
+                <button class="btn btn-sm btn-warning" type="submit" name="edit">Edit this Book</button>
+            </form>
+
+            <form action="/book/{{ book.getId }}/delete" method="post">
+                <input name="_method" type="hidden" value="delete">
+                <button class="btn btn-sm btn-danger" type="submit" name="delete">Delete this Book</button>
+            </form>
+
+            <a href="/">Home</a>
+
+        </div>
+
+    </body>
+</html>

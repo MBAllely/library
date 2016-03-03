@@ -7,6 +7,8 @@
 
     $app = new Silex\Application();
 
+    $app['debug'] = true;
+
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
 
@@ -16,12 +18,11 @@
     $DB = new PDO($server, $username, $password);
 
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/../views'
+        'twig.path' => __DIR__.'/../views'
     ));
 
     $app->get("/", function() use ($app) {
         return $app['twig']->render('index.html.twig', array(
-            // twig input associative array
         ));
     });
 
@@ -30,13 +31,89 @@
             'books' => Book::getAll()
         ));
     });
-    
+
+    $app->post("/books", function() use ($app) {
+        $new_book = new Book($_POST['title'], $_POST['copies']);
+        $new_book->save();
+        return $app['twig']->render('books.html.twig', array(
+            'books' => Book::getAll()
+        ));
+    });
+
+    $app->get("/book/{id}", function($id) use ($app) {
+        $book = Book::find($id);
+        return $app['twig']->render('book.html.twig', array(
+            'book' => $book,
+            'authors' => $book->getAuthors()
+        ));
+    });
+
+    $app->get("/book/{id}/edit", function($id) use ($app) {
+        $book = Book::find($id);
+        return $app['twig']->render('book_edit.html.twig', array(
+            'book' => $book,
+            'authors' => $book->getAuthors()
+        ));
+    });
+
+    $app->patch("/book/{id}", function($id) use ($app) {
+        $book = Book::find($id);
+        var_dump($book->getCopies());
+        $book->update($_POST['new_title'], $_POST['new_copies']);
+        return $app['twig']->render('book.html.twig', array(
+            'book' => $book,
+            'authors' => $book->getAuthors()
+        ));
+    });
+
     $app->get("/authors", function() use ($app) {
         return $app['twig']->render('authors.html.twig', array(
             'authors' => Author::getAll()
         ));
     });
-    
+
+    $app->post("/authors", function() use ($app) {
+        $new_author = new Author($_POST['author_name']);
+        $new_author->save();
+        return $app['twig']->render('authors.html.twig', array(
+            'authors' => Author::getAll()
+        ));
+    });
+
+    $app->get("/author/{id}", function($id) use ($app) {
+        $author = Author::find($id);
+        return $app['twig']->render('author.html.twig', array(
+            'author' => $author,
+            'books' => $author->getBooks($id)
+        ));
+    });
+
+    $app->get("/author/{id}/edit", function($id) use ($app) {
+        $author = Author::find($id);
+        return $app['twig']->render('author_edit.html.twig', array(
+            'author' => $author
+        ));
+    });
+
+    $app->patch("/author/{id}", function($id) use ($app) {
+        $new_name = $_POST['new_name'];
+        $author = Author::find($id);
+        $author->update($new_name);
+
+        return $app['twig']->render('author.html.twig', array(
+            'author' => $author,
+            'books' => $author->getBooks($id)
+        ));
+    });
+
+    $app->delete("/author/{id}/delete", function($id) use ($app) {
+        $author = Author::find($id);
+        $author->deleteOneAuthor();
+        return $app['twig']->render('authors.html.twig', array(
+            'authors' => Author::getAll()
+        ));
+    });
+
     $app->get("/patrons", function() use ($app) {
         return $app['twig']->render('patrons.html.twig', array(
             'patrons' => Patron::getAll()

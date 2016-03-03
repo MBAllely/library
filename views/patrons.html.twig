@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% include '/includes/head.html.twig' %}
         <meta charset="utf-8">
         <title>Library | Patrons</title>
     </head>
     <body>
-        <h1>Patrons!</h1>
+        <div class="container">
+
+            <h1>Patrons!</h1>
+            <h3>Here are the patrons in the current catalog:</h3>
+            <ul>
+                {% if patrons is not empty %}
+                    {% for patron in patrons %}
+                        <li>{{ patron.getTitle() }}</li>
+                    {% endfor %}
+                {% else %}
+                    <h1>There are no patrons!  Support your local library, asshole!</h1>
+                {% endif %}
+            </ul>
+
+            <h5>Add a patron to the database:</h5>
+
+            <form action="/books" method="post">
+                <label for="patron_name">Patron:</label>
+                <input type="text" name="patron_name" value="">
+                <button type="submit" class="btn btn-primary">Add Patron</button>
+            </form>
+
+            <a href="/">Home</a>
+
+        </div>
     </body>
 </html>

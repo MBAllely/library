@@ -1,10 +1,36 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% include '/includes/head.html.twig' %}
         <meta charset="utf-8">
         <title>Library | Authors</title>
     </head>
     <body>
-        <h2>Authors!</h2>
+        <div class="container">
+
+            <h2>Authors!</h2>
+            <h3>Here are the authors in the current catalog:</h3>
+            <ul>
+                {% if authors is not empty %}
+                    {% for author in authors %}
+                        <h3><a href="/author/{{ author.getId }}">{{ author.getAuthorName }}</a></h3>
+
+                    {% endfor %}
+                {% else %}
+                    <h1>There are no authors!  Support your local library, asshole!</h1>
+                {% endif %}
+            </ul>
+
+            <h5>Add an author to the database:</h5>
+
+            <form action="/authors" method="post">
+                <label for="author_name">Author:</label>
+                <input type="text" name="author_name" placeholder="ex: JRR Tolkein">
+                <button type="submit" class="btn btn-primary">Add Author</button>
+            </form>
+
+            <a href="/">Home</a>
+
+        </div>
     </body>
 </html>
