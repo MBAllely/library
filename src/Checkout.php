@@ -61,9 +61,6 @@
             return $this->id;
         }
 
-        function addPatron($patron)
-        {
-            $GLOBALS['DB']->exec("INSERT INTO checkout (patron_id) VALUES ({$patron->getId()}, {$this->getId()});");
-        }
+        
     }
  ?>

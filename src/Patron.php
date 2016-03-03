@@ -86,10 +86,19 @@
             $GLOBALS['DB']->exec("DELETE FROM patrons;");
         }
 
-        // function deleteOneBook()
-        // {
-        //     $GLOBALS['DB']->exec("DELETE FROM book WHERE id = {$this->getId()};");
-        //     $GLOBALS['DB']->exec("DELETE FROM author_book WHERE book_id = {$this->getId()};");
-        // }
+        function deleteOnePatron()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM patrons WHERE id = {$this->getId()};");
+        }
+
+        function addCheckout()
+        {
+
+        }
+
+        function getCheckouts()
+        {
+
+        }
 
     }

@@ -50,6 +50,23 @@
             $this->assertEquals([$test_author], $result);
         }
 
+        function test_update()
+        {
+            // Arrange
+            $author_name = "Margaret Atwood";
+            $test_author = new Author($author_name);
+            $test_author->save();
+
+            $new_name = "Maggie Atwood";
+
+            //Act
+            $test_author->update($new_name);
+            $result = $test_author->getAuthorName();
+
+            //Assert
+            $this->assertEquals($new_name, $result);
+        }
+
         function test_getAll()
         {
             //Arrange

@@ -66,7 +66,24 @@
             $this->assertEquals([$test_patron, $test_patron2], $result);
         }
 
+        function test_deleteOnePatron()
+        {
+            //Arrange
+            $patron_name = "Maragaret Atwood";
+            $test_patron = new Patron($patron_name);
+            $test_patron->save();
 
+            $patron_name2 = "Philip Pullman";
+            $test_patron2 = new Patron($patron_name2);
+            $test_patron2->save();
+
+            //Act
+            $test_patron->deleteOnePatron();
+            $result = Patron::getAll();
+
+            //Assert
+            $this->assertEquals([$test_patron2], $result);
+        }
 
         // function test_getBooks()
         // {
