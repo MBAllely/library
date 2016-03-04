@@ -66,6 +66,14 @@
         ));
     });
 
+    $app->delete("/book/{id}/delete", function($id) use ($app) {
+        $book = Book::find($id);
+        $book->deleteOneBook();
+        return $app['twig']->render('books.html.twig', array(
+            'books' => Book::getAll()
+        ));
+    });
+
     $app->get("/authors", function() use ($app) {
         return $app['twig']->render('authors.html.twig', array(
             'authors' => Author::getAll()
@@ -119,6 +127,50 @@
             'patrons' => Patron::getAll()
         ));
     });
+
+    $app->post("/patrons", function() use ($app) {
+        $new_patron = new Patron($_POST['patron_name']);
+        $new_patron->save();
+        return $app['twig']->render('patrons.html.twig', array(
+            'patrons' => Patron::getAll()
+        ));
+    });
+
+    $app->get("/patron/{id}", function($id) use ($app) {
+        $patron = Patron::find($id);
+        return $app['twig']->render('patron.html.twig', array(
+            'patron' => $patron,
+            'checkouts' => $patron->getCheckouts()
+        ));
+    });
+
+    $app->get("/patron/{id}/edit", function($id) use ($app) {
+        $patron = Patron::find($id);
+        return $app['twig']->render('patron_edit.html.twig', array(
+            'patron' => $patron,
+            'checkouts' => $patron->getCheckouts()
+        ));
+    });
+
+    $app->patch("/patron/{id}", function($id) use ($app) {
+        $new_name = $_POST['new_patron_name'];
+        $patron = Patron::find($id);
+        $patron->update($new_name);
+
+        return $app['twig']->render('patron.html.twig', array(
+            'patron' => $patron,
+            'checkouts' => $patron->getCheckouts()
+        ));
+    });
+
+    $app->delete("/patron/{id}/delete", function($id) use ($app) {
+        $patron = Patron::find($id);
+        $patron->deleteOnePatron();
+        return $app['twig']->render('patrons.html.twig', array(
+            'patrons' => Patron::getAll()
+        ));
+    });
+
 
     return $app;
 ?>

@@ -47,7 +47,7 @@
 
         function update($new_patron_name)
         {
-            $GLOBALS['DB']->exec("INSERT INTO patrons SET patron_name = '{$new_patron_name}';");
+            $GLOBALS['DB']->exec("UPDATE patrons SET patron_name = '{$new_patron_name}' WHERE patron_id = {$this->getId()};");
             $this->setPatronName($new_patron_name);
         }
 

@@ -47,9 +47,10 @@
 
         function update($new_author_name)
         {
-            $GLOBALS['DB']->exec("INSERT INTO authors SET author_name = '{$new_author_name}';");
+            $GLOBALS['DB']->exec("UPDATE authors SET author_name = '{$new_author_name}' WHERE id = {$this->getId()};");
             $this->setAuthorName($new_author_name);
         }
+
 
         static function find($search_id)
         {
@@ -76,7 +77,7 @@
                 WHERE authors.id = {$this->getId()};");
 
             $books = [];
-            
+
             foreach($found_books as $book) {
 
                 $title = $book['title'];

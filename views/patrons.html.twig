@@ -13,7 +13,7 @@
             <ul>
                 {% if patrons is not empty %}
                     {% for patron in patrons %}
-                        <li>{{ patron.getTitle() }}</li>
+                        <h5><a href="/patron/{{ patron.getId }}">{{ patron.getPatronName }}</a></h5>
                     {% endfor %}
                 {% else %}
                     <h1>There are no patrons!  Support your local library, asshole!</h1>
@@ -22,7 +22,7 @@
 
             <h5>Add a patron to the database:</h5>
 
-            <form action="/books" method="post">
+            <form action="/patrons" method="post">
                 <label for="patron_name">Patron:</label>
                 <input type="text" name="patron_name" value="">
                 <button type="submit" class="btn btn-primary">Add Patron</button>

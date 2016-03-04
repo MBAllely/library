@@ -22,9 +22,9 @@
             return $this->title;
         }
 
-        function setCopies($copies)
+        function setCopies($new_copies)
         {
-            $this->copies = $copies;
+            $this->copies = $new_copies;
         }
 
         function getCopies()
@@ -58,10 +58,12 @@
             return $books;
         }
 
-        function update($new_title)
+        function update($new_title, $new_copies)
         {
-            $GLOBALS['DB']->exec("INSERT INTO books SET title = '{$new_title}';");
+            $GLOBALS['DB']->exec("UPDATE books SET title = '{$new_title}' WHERE id = {$this->getId()};");
             $this->setTitle($new_title);
+            $GLOBALS['DB']->exec("UPDATE books SET copies = '{$new_copies}' WHERE id = {$this->getId()};");
+            $this->setCopies($new_copies);
         }
 
         static function find($search_id)

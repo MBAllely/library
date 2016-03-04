@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include '/includes/head.html.twig' %}
+        <title>Library | {{ patron.getPatronName }}</title>
+    </head>
+    <body>
+        <div class="container">
+            <h2>{{ patron.getPatronName }}</h2>
+
+            {% if checkouts is not empty %}
+                <h4>{{ patron.getCheckouts }}'s checkouts are:</h4>
+                {% for checkout in checkouts %}
+                    <h5>{{ checkout.getTitle }}</h5>
+                {% endfor %}
+            {% else %}
+                <h5>This patron has no checkouts at this library.</h5>
+            {% endif %}
+
+            <form action="/patron/{{ patron.getId }}/edit" method="get">
+                <button class="btn btn-sm btn-warning" type="submit" name="edit">Edit this patron</button>
+            </form>
+
+            <form action="/patron/{{ patron.getId }}/delete" method="post">
+                <input name="_method" type="hidden" value="delete">
+                <button class="btn btn-sm btn-danger" type="submit" name="delete">Delete this patron</button>
+            </form>
+
+            <a href="/">Home</a>
+
+        </div>
+
+    </body>
+</html>
