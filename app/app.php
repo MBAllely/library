@@ -44,7 +44,8 @@
         $book = Book::find($id);
         return $app['twig']->render('book.html.twig', array(
             'book' => $book,
-            'authors' => $book->getAuthors()
+            'authors' => $book->getAuthors(),
+            'all_authors' => Author::getAll()
         ));
     });
 
@@ -53,6 +54,17 @@
         return $app['twig']->render('book_edit.html.twig', array(
             'book' => $book,
             'authors' => $book->getAuthors()
+        ));
+    });
+
+    $app->post("/book/{id}", function($id) use ($app) {
+        $book = Book::find($id);
+        $author = Author::find($_POST['id']);
+        $book->addAuthor($author);
+        return $app['twig']->render('book.html.twig', array(
+            'book' => $book,
+            'authors' => $book->getAuthors(),
+            'all_authors' => Author::getAll()
         ));
     });
 
@@ -92,7 +104,19 @@
         $author = Author::find($id);
         return $app['twig']->render('author.html.twig', array(
             'author' => $author,
-            'books' => $author->getBooks($id)
+            'books' => $author->getBooks($id),
+            'all_books' => Book::getAll()
+        ));
+    });
+
+    $app->post("/author/{id}", function($id) use ($app) {
+        $author = Author::find($id);
+        $book = Book::find($_POST['id']);
+        $author->addBook($book);
+        return $app['twig']->render('author.html.twig', array(
+            'author' => $author,
+            'books' => $author->getBooks(),
+            'all_books' => Book::getAll()
         ));
     });
 
@@ -168,6 +192,12 @@
         $patron->deleteOnePatron();
         return $app['twig']->render('patrons.html.twig', array(
             'patrons' => Patron::getAll()
+        ));
+    });
+
+    $app->get("/checkouts", function() use ($app) {
+        return $app['twig']->render('checkouts.html.twig', array(
+            'checkouts' => Checkout::getAll()
         ));
     });
 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include '/includes/head.html.twig' %}
+        <meta charset="utf-8">
+        <title>Library | Checkouts</title>
+    </head>
+    <body>
+        <div class="container">
+
+            <h2>Checkouts!</h2>
+            <!-- <h3>Here are the checkouts in the current catalog:</h3>
+            <ul>
+                {% if checkouts is not empty %}
+                    {% for checkout in checkouts %}
+                        <h3><a href="/checkout/{{ checkout.getId }}">{{ checkout.getBookId }}</a></h3>
+
+                    {% endfor %}
+                {% else %}
+                    <h1>There are no checkouts!  Support your local library, asshole!</h1>
+                {% endif %}
+            </ul> -->
+
+            <a href="/">Home</a>
+
+        </div>
+    </body>
+</html>

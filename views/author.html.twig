@@ -17,6 +17,18 @@
                 <h5>This author has no books at this library.</h5>
             {% endif %}
 
+            <form action="/author/{{ author.getId }}" method="post">
+                 <input type="hidden" name="title" value="{{ author.getId }}">
+                 <label>Assign this author to a book:</label>
+                 <select name="id">
+                    {% for book in all_books %}
+                        <option value="{{ book.getId }}">{{ book.getTitle }}</option>
+                    {% endfor %}
+                 </select>
+                 <button type="submit" class="btn btn-sm btn-success">Add book</button>
+            </form>
+
+
             <form action="/author/{{ author.getId }}/edit" method="get">
                 <button class="btn btn-sm btn-warning" type="submit" name="edit">Edit this Author</button>
             </form>

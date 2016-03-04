@@ -9,13 +9,24 @@
             <h2>{{ book.getTitle }} | Copies: {{ book.getCopies }}</h2>
 
             {% if authors is not empty %}
-                <h4>The author(s) for {{ book.getTitle }} ise (are):</h4>
+                <h4>The author(s) for {{ book.getTitle }} is(are):</h4>
                 {% for author in authors %}
                     <h5>{{ author.getAuthorName }}</h5>
                 {% endfor %}
             {% else %}
                 <h5>This book has not been assigned any authors.</h5>
             {% endif %}
+
+            <form action="/book/{{ book.getId }}" method="post">
+                 <input type="hidden" name="title" value="{{ book.getId }}">
+                 <label>Assign this book an author:</label>
+                 <select name="id">
+                    {% for author in all_authors %}
+                        <option value="{{ author.getId }}">{{ author.getAuthorName }}</option>
+                    {% endfor %}
+                 </select>
+                 <button type="submit" class="btn btn-sm btn-success">Add author</button>
+            </form>
 
             <form action="/book/{{ book.getId }}/edit" method="get">
                 <button class="btn btn-sm btn-warning" type="submit" name="edit">Edit this Book</button>
